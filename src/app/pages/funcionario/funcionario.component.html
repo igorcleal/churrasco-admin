@@ -1,0 +1,84 @@
+<app-card [title]="'Funcionários'">
+
+  <div header-right style="margin-right:10px; margin-left:10px;">
+    <button type="button" class="btn btn-success waves-effect" (click)="abrirPopupIncluir()">Novo</button>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-4">
+      <h4 class="label-top">Nome</h4>
+      <input placeholder="Nome" [(ngModel)]="search" (keyup)="filtrar()" type="text" class="form-control">
+    </div>
+  </div>
+
+  <app-modal-basic #modal [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+      <h4 class="modal-title">Funcionários</h4>
+      <button type="button" class="close basic-close" (click)="modal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="app-modal-body">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">Nome</h4>
+            <input formControlName="nome" placeholder="Nome" [(ngModel)]="funcionario.nome" type="text" class="form-control">
+            <div class="messages text-danger" *ngIf="(!form.controls['nome'].valid && form.controls['nome'].touched) || (!form.controls['nome'].valid && btnSalvarClicked)">Digite o nome</div>
+          </div>
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">Profissão</h4>
+            <select [(ngModel)]="funcionario.profissao.id" formControlName="idProfissao" name="select" class="form-control ">
+              <option value="" disabled selected>Profissão</option>
+              <option *ngFor="let p of profissoes" [value]="p.id">
+                {{p.nome}}
+              </option>
+            </select>
+            <div class="messages text-danger" *ngIf="(!form.controls['idProfissao'].valid && form.controls['idProfissao'].touched) || (!form.controls['idProfissao'].valid && btnSalvarClicked)">Escolha a profissão</div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">E-mail</h4>
+            <input formControlName="email" placeholder="E-mail" [(ngModel)]="funcionario.email" type="text" class="form-control">
+            <div class="messages text-danger" *ngIf="(!form.controls['email'].valid && form.controls['email'].touched) || (!form.controls['email'].valid && btnSalvarClicked)">Digite um e-mail váido...</div>
+          </div>
+          <div class="col-sm-6">
+            <h4 class="label-top">Telefone</h4>
+            <input formControlName="telefone" [(ngModel)]="funcionario.telefone" type="text" class="form-control" placeholder="Telefone">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-default waves-effect" (click)="modal.hide()">Fechar</button>
+      <button (click)="salvar(); btnSalvarClicked = true;" type="button" class="btn btn-primary waves-effect waves-light ">Salvar</button>
+    </div>
+  </app-modal-basic>
+
+  <ngx-datatable class="table-hover data-table scroll" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="columns"
+    [columnMode]="'force'" [scrollbarV]="true" [limit]="10" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" [reorderable]="reorderable"
+    (activate)='onClickLine($event)'>
+    <ngx-datatable-column name="Nome">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="profissao">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value.nome}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="email">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value}}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column prop="telefone">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        {{value}}
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+
+</app-card>

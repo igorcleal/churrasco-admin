@@ -1,0 +1,9 @@
+<ngx-datatable class="table-hover data-table scroll" [rows]="rows" [loadingIndicator]="loadingIndicator" [columns]="columns"
+  [columnMode]="'flex'" [scrollbarV]="true" [limit]="10" [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" [reorderable]="reorderable"
+  (activate)='onClickLine($event)'>
+  <ngx-datatable-column name="Nome" [flexGrow]="5">
+    <ng-template let-value="value" ngx-datatable-cell-template>
+      {{value}}
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>

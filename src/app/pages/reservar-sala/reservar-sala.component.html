@@ -1,0 +1,109 @@
+<app-card [title]="'Salas'">
+
+  <div class="row">
+    <div class="col-sm-12 m-b-10">
+      <h4 class="label-top">Sala</h4>
+      <select (change)="changeSala()" [(ngModel)]="idSalaSelecionada" name="select" class="form-control ">
+        <option value="" disabled selected>Selecione</option>
+        <option *ngFor="let sala of listSalas" [value]="sala.id">
+          {{sala.nome}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="idSalaSelecionada">
+    <div class="col-sm-12 m-b-10 text-center">
+      <h4 class="label-top text-left">Data</h4>
+      <div class="row">
+        <div class="col-sm-1 text-center">
+          <button class="btn btn-primary " (click)="backDate()">
+            <i class="icofont icofont-arrow-left"></i>
+          </button>
+        </div>
+        <div class="col-sm-10 text-center">
+          <input [value]="semanaAtual" style="font-size:20px;background:transparent;" class="form-control form-control-center form-control-bold"
+            type="text" disabled />
+        </div>
+        <div class="col-sm-1 text-center" style="padding-left:0px;">
+          <button class="btn btn-primary " (click)="nextDate()">
+            <i class="icofont icofont-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="idSalaSelecionada" class="row" style=" display: flex;justify-content: center;">
+
+    <div style="display:flex; flex-direction: column; margin-top: 30px;">
+      <div class="row-hour" *ngFor="let hora of listHoras; let i = index">
+        <div class="div-horas" [style.border-bottom]="i < listHoras.length-1?'0':'1px solid rgba(0, 0, 0, .125)'">
+          <span class="p-l-5">{{hora}}:00 h </span>
+          <span class="p-l-5">{{hora+2}}:00 h</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngFor="let dia of listDiasSemana; let indexDia = index" style="width:13%;">
+      <div style="height: 30px;" class="text-center">
+        {{dia | date:'dd/MM'}}
+      </div>
+      <div class="box-horarios" *ngFor="let hora of listHoras; let i = index">
+
+        <div class="box-hour" [style.border-bottom]="i < listHoras.length-1?'0':'1px solid rgba(0, 0, 0, .125)'">
+
+          <div style="width:100%;display: flex; justify-content: center; align-items: center;">
+
+            <button *ngIf="isOcupado(dia, hora)" (click)="abrirModalInformacoes(dia, hora)" type="button" class="btn btn-mini btn-danger btn-outline-danger waves-effect">
+              <i class="icofont icofont-ui-lock"></i>
+            </button>
+
+            <button [class.disabled]="!salaSelecionada.diasPermitidos[indexDia] || dataMenorHoje(dia)" [disabled]="!salaSelecionada.diasPermitidos[indexDia] || dataMenorHoje(dia)"
+              *ngIf="!isOcupado(dia, hora)" (click)="confirmReserva(dia, hora)" type="button" class="btn btn-mini btn-primary waves-effect">
+              <i class="icofont icofont-ui-add"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <app-modal-basic #modal [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+      <h4 class="modal-title">Liberação entrada condomínio</h4>
+      <button type="button" class="close basic-close" (click)="modal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="app-modal-body" *ngIf="modal.visible">
+
+      <div class="row">
+        <div class="col-sm-12 m-b-10">
+          <h4 class="label-top">Usuário</h4>
+          <h4>{{entidade.usuario.nome}}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 m-b-10">
+          <h4 class="label-top">Data Reserva</h4>
+          <h4>{{entidade.dataReserva | date : 'dd/MM/yyyy'}}</h4>
+        </div>
+        <div class="col-sm-6 m-b-10">
+          <h4 class="label-top">Período</h4>
+          <h4>{{entidade.horaInicial}} as {{entidade.horaInicial+2}}</h4>
+        </div>
+      </div>
+
+    </div>
+    <div class="app-modal-footer" *ngIf="modal.visible">
+      <button type="button" class="btn btn-default btn-outline-default waves-effect" (click)="modal.hide()">
+        <i class="icofont icofont-close"></i>Fechar</button>
+      <button *ngIf="podeApagar()" class="btn btn-danger" (click)="confirmApagar()">
+        <i class="icofont icofont-trash"></i>Cancelar Reserva</button>
+    </div>
+  </app-modal-basic>
+
+</app-card>

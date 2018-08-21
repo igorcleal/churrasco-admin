@@ -1,0 +1,48 @@
+<app-card [title]="'Salas'">
+
+  <div header-right style="margin-right:10px; margin-left:10px;">
+    <button type="button" class="btn btn-success waves-effect" (click)="abrirPopupIncluir()">Novo</button>
+  </div>
+
+  <app-modal-basic #modal [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+      <h4 class="modal-title">Liberação entrada condomínio</h4>
+      <button type="button" class="close basic-close" (click)="modal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="app-modal-body">
+
+      <form [formGroup]="form" *ngIf="modal.visible">
+        <div class="row">
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">Nome</h4>
+            <input formControlName="nome" placeholder="Nome" [(ngModel)]="entidade.nome" type="text" class="form-control">
+            <div class="messages text-danger" *ngIf="(!form.controls['nome'].valid && form.controls['nome'].touched) || (!form.controls['nome'].valid && btnSalvarClicked)">Digite o nome...</div>
+          </div>
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">Data Liberação</h4>
+            <input formControlName="data" [(ngModel)]="entidade.data" class="form-control" type="date" />
+            <div class="messages text-danger" *ngIf="(!form.controls['data'].valid && form.controls['data'].touched) || (!form.controls['data'].valid && btnSalvarClicked)">Digite uma data...</div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="app-modal-footer" *ngIf="modal.visible">
+      <button type="button" class="btn btn-default btn-outline-default waves-effect" (click)="modal.hide()">
+        <i class="icofont icofont-close"></i>Fechar</button>
+      <button *ngIf="entidade.id && podeAlterar()" class="btn btn-danger" (click)="confirmApagar()">
+        <i class="icofont icofont-trash"></i>Apagar</button>
+      <button *ngIf="!entidade || podeAlterar()" (click)="salvar(); btnSalvarClicked = true;" type="button" class="btn btn-primary waves-effect waves-light ">
+        <i class="icofont icofont-save"></i>Salvar
+      </button>
+    </div>
+  </app-modal-basic>
+
+  <app-liberar-entrada-lista (alterar)="abrirAlteracao($event)"></app-liberar-entrada-lista>
+
+</app-card>
+
+<ng2-toasty [position]="'top-right'"></ng2-toasty>

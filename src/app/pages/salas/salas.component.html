@@ -1,0 +1,89 @@
+<app-card [title]="'Salas'">
+
+  <div header-right style="margin-right:10px; margin-left:10px;">
+    <button type="button" class="btn btn-success waves-effect" (click)="abrirPopupIncluir()">Novo</button>
+  </div>
+
+  <app-modal-basic #modal [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+      <h4 class="modal-title">Salas</h4>
+      <button type="button" class="close basic-close" (click)="modal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="app-modal-body">
+
+      <form [formGroup]="form" *ngIf="modal.visible">
+        <div class="row">
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">Nome</h4>
+            <input formControlName="nome" placeholder="Nome" [(ngModel)]="sala.nome" type="text" class="form-control">
+            <div class="messages text-danger" *ngIf="(!form.controls['nome'].valid && form.controls['nome'].touched) || (!form.controls['nome'].valid && btnSalvarClicked)">Digite o nome</div>
+          </div>
+          <div class="col-sm-6 m-b-10">
+            <h4 class="label-top">Necessário Pagamento</h4>
+            <div class="border-checkbox-section">
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input [(ngModel)]="sala.isPaga" formControlName="isPaga" class="border-checkbox" type="checkbox" id="isPaga">
+                <label class="border-checkbox-label" for="isPaga">Sim</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 m-b-30">
+            <h4 class="label-top">Dias permitidos reserva</h4>
+            <div class="border-checkbox-section">
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="domingo" [(ngModel)]="sala.diasPermitidos[0]" formControlName="domingo" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="domingo">Domingo</label>
+              </div>
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="segunda" [(ngModel)]="sala.diasPermitidos[1]" formControlName="segunda" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="segunda">Segunda</label>
+              </div>
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="terca" [(ngModel)]="sala.diasPermitidos[2]" formControlName="terca" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="terca">Terça</label>
+              </div>
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="quarta" [(ngModel)]="sala.diasPermitidos[3]" formControlName="quarta" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="quarta">Quarta</label>
+              </div>
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="quinta" [(ngModel)]="sala.diasPermitidos[4]" formControlName="quinta" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="quinta">Quinta</label>
+              </div>
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="sexta" [(ngModel)]="sala.diasPermitidos[5]" formControlName="sexta" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="sexta">Sexta</label>
+              </div>
+              <div class="border-checkbox-group border-checkbox-group-primary">
+                <input id="sabado" [(ngModel)]="sala.diasPermitidos[6]" formControlName="sabado" class="border-checkbox" type="checkbox">
+                <label class="border-checkbox-label" for="sabado">Sábado</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="app-modal-footer">
+      <button type="button" class="btn btn-default btn-outline-default waves-effect" (click)="modal.hide()">
+        <i class="icofont icofont-close"></i>Fechar</button>
+      <button *ngIf="sala.id" class="btn btn-danger" (click)="confirmApagar()">
+        <i class="icofont icofont-trash"></i>Apagar</button>
+      <button (click)="salvar(); btnSalvarClicked = true;" type="button" class="btn btn-primary waves-effect waves-light ">
+        <i class="icofont icofont-save"></i>Salvar
+      </button>
+    </div>
+  </app-modal-basic>
+
+  <app-salas-lista (alterar)="abrirAlteracao($event)"></app-salas-lista>
+
+</app-card>
+
+<ng2-toasty [position]="'top-right'"></ng2-toasty>
