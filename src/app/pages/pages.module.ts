@@ -15,6 +15,9 @@ import { SalasService } from 'app/services/salas.service';
 import { LiberarEntradaComponent } from './liberar-entrada/liberar-entrada.component';
 import { LiberarEntradaListaComponent } from './liberar-entrada/liberar-entrada-lista/liberar-entrada-lista.component';
 import { ReservarSalaComponent } from './reservar-sala/reservar-sala.component';
+import { ProdutosComponent } from './produtos/produtos.component';
+import { ProdutosListaComponent } from './produtos/produtos-lista/produtos-lista.component';
+import { ProdutosService } from 'app/services/produtos.service';
 
 @NgModule({
   imports: [
@@ -27,12 +30,15 @@ import { ReservarSalaComponent } from './reservar-sala/reservar-sala.component';
     SalasListaComponent,
     LiberarEntradaComponent,
     LiberarEntradaListaComponent,
-    ReservarSalaComponent
+    ReservarSalaComponent,
+    ProdutosComponent,
+    ProdutosListaComponent
   ],
   providers: [ProfissoesService,
     FuncionariosService,
     SalasService,
     LiberarEntradasService,
-    ReservaSalaService]
+    ReservaSalaService,
+    ProdutosService]
 })
 export class PagesModule { }

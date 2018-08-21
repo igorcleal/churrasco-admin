@@ -6,4 +6,5 @@ export class Collections {
     public static SALAS = 'salas';
     public static CONDOMINIOS_ENTRADAS = 'entradas';
     public static CONDOMINIOS_RESERVAS_SALAS = 'reservas_salas';
+    public static PRODUTOS = 'produtos';
 }

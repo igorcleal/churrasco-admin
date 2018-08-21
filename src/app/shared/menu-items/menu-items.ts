@@ -56,6 +56,10 @@ const MENUITEMS = [
           {
             state: 'reservas',
             name: 'Reservas'
+          },
+          {
+            state: 'produtos',
+            name: 'Produtos'
           }
         ]
       },

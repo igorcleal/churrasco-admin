@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@agm/core": "^1.0.0-beta.0",
+    "@agm/core": "1.0.0-beta.0",
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
@@ -44,7 +44,7 @@
     "css-animator": "2.1.1",
     "echarts": "^3.6.2",
     "famfamfam-flags": "^1.0.0",
-    "firebase": "^4.12.1",
+    "firebase": "4.12.1",
     "flag-icon-css": "^2.8.0",
     "jquery-knob": "github:aterrien/jQuery-Knob",
     "jquery-sparkline": "^2.4.0",

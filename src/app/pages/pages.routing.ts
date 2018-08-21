@@ -3,6 +3,7 @@ import { SalasComponent } from './salas/salas.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
 import { Routes } from '@angular/router';
 import { LiberarEntradaComponent } from 'app/pages/liberar-entrada/liberar-entrada.component';
+import { ProdutosComponent } from 'app/pages/produtos/produtos.component';
 
 export const PagesRoutes: Routes = [{
     path: 'funcionarios',
@@ -19,4 +20,8 @@ export const PagesRoutes: Routes = [{
 {
     path: 'reservas',
     component: ReservarSalaComponent
+},
+{
+    path: 'produtos',
+    component: ProdutosComponent
 }];
